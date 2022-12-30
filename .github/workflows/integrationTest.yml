@@ -566,7 +566,7 @@ jobs:
               -var="s3_bucket=${S3_INTEGRATION_BUCKET}" \
               -var="ssh_key_name=${KEY_NAME}" \
               -var="test_name=${{ matrix.arrays.os }}" \
-              -var="test_dir=${{ matrix.arrays.test_dir }}" 
+              -var="test_dir=${{ matrix.arrays.test_dir }}" \
               -var="github_test_repo_branch=${{env.CWA_GITHUB_TEST_REPO_BRANCH}}" ; then terraform destroy -auto-approve
             else
               terraform destroy -auto-approve && exit 1
