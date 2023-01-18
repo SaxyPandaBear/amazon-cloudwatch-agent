@@ -438,10 +438,10 @@ jobs:
         uses: actions/cache@v2
         with:
           path: go.mod
-          key: ec2-nvidia-integration-test-${{ github.sha }}-${{ matrix.arrays.os }}-${{ matrix.arrays.arc }}-${{ matrix.arrays.test_dir }}
+          key: ec2-nvidia-integration-test-${{ github.sha }}-${{ matrix.arrays.os }}-${{ matrix.arrays.arc }}-${{ matrix.arrays.testDir }}
 
       - name: Echo Test Info
-        run: echo run on ec2 instance os ${{ matrix.arrays.os }} arc ${{ matrix.arrays.arc }} test dir ${{ matrix.arrays.test_dir }}
+        run: echo run on ec2 instance os ${{ matrix.arrays.os }} arc ${{ matrix.arrays.arc }} test dir ${{ matrix.arrays.testDir }}
 
       - name: Verify Terraform version
         run: terraform --version
@@ -470,7 +470,7 @@ jobs:
               -var="s3_bucket=${S3_INTEGRATION_BUCKET}" \
               -var="ssh_key_name=${KEY_NAME}" \
               -var="test_name=cw-integ-test-${{ matrix.arrays.os }}" \
-              -var="test_dir=${{ matrix.arrays.test_dir }}" ; then terraform destroy -auto-approve
+              -var="test_dir=${{ matrix.arrays.testDir }}" ; then terraform destroy -auto-approve
             else
               terraform destroy -auto-approve && exit 1
             fi
@@ -540,10 +540,10 @@ jobs:
         uses: actions/cache@v2
         with:
           path: go.mod
-          key: ec2-linux-integration-test-${{ github.sha }}-${{ matrix.arrays.os }}-${{ matrix.arrays.arc }}-${{ matrix.arrays.test_dir }}
+          key: ec2-linux-integration-test-${{ github.sha }}-${{ matrix.arrays.os }}-${{ matrix.arrays.arc }}-${{ matrix.arrays.testDir }}
 
       - name: Echo Test Info
-        run: echo run on ec2 instance os ${{ matrix.arrays.os }} arc ${{ matrix.arrays.arc }} test dir ${{ matrix.arrays.test_dir }}
+        run: echo run on ec2 instance os ${{ matrix.arrays.os }} arc ${{ matrix.arrays.arc }} test dir ${{ matrix.arrays.testDir }}
 
       - name: Verify Terraform version
         run: terraform --version
@@ -572,7 +572,7 @@ jobs:
               -var="s3_bucket=${S3_INTEGRATION_BUCKET}" \
               -var="ssh_key_name=${KEY_NAME}" \
               -var="test_name=${{ matrix.arrays.os }}" \
-              -var="test_dir=${{ matrix.arrays.test_dir }}" \
+              -var="test_dir=${{ matrix.arrays.testDir }}" \
               -var="plugin_tests='${{ github.event.inputs.plugins }}'" \
               -var="github_test_repo_branch=${{env.CWA_GITHUB_TEST_REPO_BRANCH}}" ; then terraform destroy -auto-approve
             else
@@ -638,7 +638,7 @@ jobs:
 #            -var="ssh_key_value=${PRIVATE_KEY}" -var="ssh_key_name=${KEY_NAME}" \
 #            -var="github_repo=${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}.git" \
 #            -var="cwa_github_sha=${GITHUB_SHA}" -var="ami=${{ matrix.arrays.ami }}" \
-#            -var="test_dir=${{ matrix.arrays.test_dir }}" \
+#            -var="test_dir=${{ matrix.arrays.testDir }}" \
 #            -var="s3_bucket=${S3_INTEGRATION_BUCKET}" ; then
 #              terraform destroy -auto-approve
 #            else
@@ -734,7 +734,7 @@ jobs:
             cd terraform/ecs/linux/ec2_launch/daemon
             terraform init
             if terraform apply --auto-approve\
-              -var="test_dir=${{ matrix.arrays.test_dir }}"\
+              -var="test_dir=${{ matrix.arrays.testDir }}"\
               -var="cwagent_image_repo=${{ steps.login-ecr.outputs.registry }}/${{ env.ECR_INTEGRATION_TEST_REPO }}"\
               -var="cwagent_image_tag=${{ github.sha }}"\
               -var="ec2_instance_type=${{ matrix.arrays.instanceType }}" \
@@ -781,7 +781,7 @@ jobs:
         uses: actions/cache@v2
         with:
           path: go.mod
-          key: ecs-fargate-integration-test-${{ github.sha }}-${{ matrix.arrays.os }}-${{ matrix.arrays.test_dir }}
+          key: ecs-fargate-integration-test-${{ github.sha }}-${{ matrix.arrays.os }}-${{ matrix.arrays.testDir }}
 
       - name: Login ECR
         id: login-ecr
@@ -803,7 +803,7 @@ jobs:
             cd terraform/ecs/linux
             terraform init
             if terraform apply --auto-approve\
-              -var="test_dir=${{ matrix.arrays.test_dir }}"\
+              -var="test_dir=${{ matrix.arrays.testDir }}"\
               -var="cwagent_image_repo=${{ steps.login-ecr.outputs.registry }}/${{ env.ECR_INTEGRATION_TEST_REPO }}"\
               -var="cwagent_image_tag=${{ github.sha }}"; then 
               terraform destroy -auto-approve
@@ -885,7 +885,7 @@ jobs:
 #              -var="cwa_github_sha_date=${{ steps.sha_date.outputs.sha_date }}" \
 #              -var="test_name=${{ matrix.arrays.os }}" \
 #              -var="performance_number_of_logs=${{ matrix.arrays.performance_number_of_logs}}"\
-#              -var="test_dir=${{ matrix.arrays.test_dir }}" ; then terraform destroy -auto-approve
+#              -var="test_dir=${{ matrix.arrays.testDir }}" ; then terraform destroy -auto-approve
 #            else
 #              terraform destroy -auto-approve && exit 1
 #            fi
