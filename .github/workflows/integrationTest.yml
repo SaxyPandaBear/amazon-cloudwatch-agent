@@ -20,7 +20,7 @@ on:
     inputs:
       plugins:
         description: 'Comma delimited list of plugins to test. Default is empty, and tests everything'
-        required: true
+        required: false
         default: ''
         type: string
 
