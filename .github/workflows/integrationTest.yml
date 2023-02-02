@@ -17,12 +17,6 @@ on:
     branches:
       - main
   workflow_dispatch:
-    inputs:
-      plugins:
-        description: 'Comma delimited list of plugins to test. Default is empty, and tests everything'
-        required: false
-        default: ''
-        type: string
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref_name }}
@@ -575,7 +569,6 @@ jobs:
               -var="ssh_key_name=${KEY_NAME}" \
               -var="test_name=${{ matrix.arrays.os }}" \
               -var="test_dir=${{ matrix.arrays.testDir }}" \
-              -var="plugin_tests='${{ github.event.inputs.plugins }}'" \
               -var="github_test_repo_branch=${{env.CWA_GITHUB_TEST_REPO_BRANCH}}" ; then terraform destroy -auto-approve
             else
               terraform destroy -auto-approve && exit 1
