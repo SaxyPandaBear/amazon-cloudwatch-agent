@@ -588,7 +588,7 @@ jobs:
           command: cd terraform/ec2/linux && terraform destroy --auto-approve
 
   EC2WindowsIntegrationTest:
-    needs: [MakeBinary, StartLocalStack, GenerateTestMatrix]
+    needs: [MakeBinary, BuildMSI, StartLocalStack, GenerateTestMatrix]
     name: 'Test'
     runs-on: ubuntu-latest
     strategy:
